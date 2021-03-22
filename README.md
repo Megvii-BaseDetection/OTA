@@ -6,6 +6,51 @@ This project provides an implementation for "OTA: Optimal Transport Assignment f
 
 <img src="./ota.png" width="800" height="380">
 
+## Requirements
+* [cvpods](https://github.com/Megvii-BaseDetection/cvpods)
+
+## Get Started
+
+* install cvpods locally (requires cuda to compile)
+```shell
+
+python3 -m pip install 'git+https://github.com/Megvii-BaseDetection/cvpods.git'
+# (add --user if you don't have permission)
+
+# Or, to install it from a local clone:
+git clone https://github.com/Megvii-BaseDetection/cvpods.git
+python3 -m pip install -e cvpods
+
+# Or,
+pip install -r requirements.txt
+python3 setup.py build develop
+```
+
+* prepare datasets
+```shell
+cd /path/to/cvpods/datasets
+ln -s /path/to/your/coco/dataset coco
+```
+
+* Train & Test
+```shell
+git clone https://github.com/Megvii-BaseDetection/OTA.git
+cd playground/detection/coco/ota.res50.fpn.coco.800size.1x  # for example
+
+# Train
+pods_train --num-gpus 8
+
+# Test
+pods_test --num-gpus 8 \
+    MODEL.WEIGHTS /path/to/your/save_dir/ckpt.pth # optional
+    OUTPUT_DIR /path/to/your/save_dir # optional
+
+# Multi node training
+## sudo apt install net-tools ifconfig
+pods_train --num-gpus 8 --num-machines N --machine-rank 0/1/.../N-1 --dist-url "tcp://MASTER_IP:port"
+
+```
+
 ### Results on COCO val set
 
 | Model | Backbone | LR Sched. | mAP | Recall | AP50/AP75/APs/APm/APl | Download |
