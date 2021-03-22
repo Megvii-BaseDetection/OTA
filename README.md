@@ -71,7 +71,7 @@ pods_train --num-gpus 8 --num-machines N --machine-rank 0/1/.../N-1 --dist-url "
 |  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.dcnv2.fpn.coco.800size.1x) | X101-DCN | 2x | 640~800 | 49.2 |   67.6/53.5/30.0/52.5/62.3 | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/EYy9odfpIEhIszqrI_vbuzIBlPcW7YRZYmXaT9ws7FkRRg?e=ZYo8SO) |
 |  [OTA*](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.dcnv2.fpn.coco.800size.1x) | X101-DCN | 2x | 640~800 | 51.5 |   68.6/57.1/34.1/53.7/64.1 | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/EYy9odfpIEhIszqrI_vbuzIBlPcW7YRZYmXaT9ws7FkRRg?e=ZYo8SO) |
 
-- \* stands for ATSS-style testing time augmentation. To enable testing time augmentation, add/modify the following fraction of code in config.py
+\* stands for ATSS-style testing time augmentation. To enable testing time augmentation, add/modify the following code frac in each corresponding config.py
 
 ```python
 
