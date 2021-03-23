@@ -3,6 +3,7 @@
 ![GitHub](https://img.shields.io/github/license/Megvii-BaseDetection/LLA)
 
 This project provides an implementation for our CVPR2021 paper "OTA: Optimal Transport Assignment for Object Detection" on PyTorch.
+**Paper Link**: Comming Soon.
 
 <img src="./ota.png" width="700" height="330">
 
