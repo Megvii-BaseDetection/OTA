@@ -96,13 +96,3 @@ This repo is developed based on cvpods. Please check [cvpods](https://github.com
 ## License
 This repo is released under the Apache 2.0 license. Please see the LICENSE file for more information.
 
-## Citing
-If you use this work in your research or wish to refer to the baseline results published here, please use the following BibTeX entries:
-```
-@article{ge2021lla,
-  title={LLA: Loss-aware Label Assignment for Dense Pedestrian Detection},
-  author={Ge, Zheng and Wang, Jianfeng and Huang, Xin and Liu, Songtao and Yoshie, Osamu},
-  journal={arXiv preprint arXiv:2101.04307},
-  year={2021}
-}
-```
