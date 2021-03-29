@@ -29,7 +29,7 @@ def permute_all_cls_and_box_to_N_HWA_K_and_concat(box_cls,
     # for each feature level, permute the outputs to make them be in the
     # same format as the labels. Note that the labels are computed for
     # all feature levels concatenated, so we keep the same representation
-    # for the objectness, the box_delta and the centerness
+    # for the objectness, the box_delta and the iou
     box_cls_flattened = [permute_to_N_HWA_K(x, num_classes) for x in box_cls]
     box_delta_flattened = [permute_to_N_HWA_K(x, 4) for x in box_delta]
     box_iou_flattened = [permute_to_N_HWA_K(x, 1) for x in box_iou]
@@ -345,14 +345,14 @@ class FCOS(nn.Module):
         return torch.cat(gt_classes), torch.cat(gt_shifts_deltas), torch.cat(gt_ious)
 
     def losses(self, gt_classes, gt_shifts_deltas, gt_ious,
-               pred_class_logits, pred_shift_deltas, pred_centerness):
+               pred_class_logits, pred_shift_deltas, pred_ious):
         """
         Args:
             For `gt_classes`, `gt_shifts_deltas` and `gt_ious` parameters, see
                 :meth:`FCOS.get_ground_truth`.
             Their shapes are (N, R) and (N, R, 4), respectively, where R is
             the total number of shifts across levels, i.e. sum(Hi x Wi)
-            For `pred_class_logits`, `pred_shift_deltas` and `pred_centerness`, see
+            For `pred_class_logits`, `pred_shift_deltas` and `pred_ious`, see
                 :meth:`FCOSHead.forward`.
 
         Returns:
@@ -361,9 +361,9 @@ class FCOS(nn.Module):
                 storing the loss. Used during training only. The dict keys are:
                 "loss_cls" and "loss_box_reg"
         """
-        pred_class_logits, pred_shift_deltas, pred_centerness = \
+        pred_class_logits, pred_shift_deltas, pred_ious = \
             permute_all_cls_and_box_to_N_HWA_K_and_concat(
-                pred_class_logits, pred_shift_deltas, pred_centerness,
+                pred_class_logits, pred_shift_deltas, pred_ious,
                 self.num_classes
             )  # Shapes: (N x R, K) and (N x R, 4), respectively.
 
@@ -382,8 +382,6 @@ class FCOS(nn.Module):
         if self.norm_sync:
             dist.all_reduce(num_foreground)
             num_foreground /= dist.get_world_size()
-            dist.all_reduce(num_target)
-            num_target /= dist.get_world_size()
 
         # logits loss
         loss_cls = sigmoid_focal_loss_jit(
@@ -398,15 +396,14 @@ class FCOS(nn.Module):
         loss_box_reg = 2. * iou_loss(
             pred_shift_deltas[foreground_idxs],
             gt_shifts_deltas[foreground_idxs],
-            gt_ious[foreground_idxs],
             box_mode="ltrb",
             loss_type=self.iou_loss_type,
             reduction="sum",
-        ) / max(1, num_target)
+        ) / max(1, num_foreground)
 
-        # centerness loss
-        loss_centerness = 0.5 * F.binary_cross_entropy_with_logits(
-            pred_centerness[foreground_idxs],
+        # iou branch loss
+        loss_iou = 0.5 * F.binary_cross_entropy_with_logits(
+            pred_ious[foreground_idxs],
             gt_ious[foreground_idxs],
             reduction="sum",
         ) / max(1, num_foreground)
@@ -414,7 +411,7 @@ class FCOS(nn.Module):
         return {
             "loss_cls": loss_cls,
             "loss_box_reg": loss_box_reg,
-            "loss_centerness": loss_centerness
+            "loss_iou": loss_iou
         }
 
     def inference(self, box_cls, box_delta, box_iou, shifts, images):
@@ -643,8 +640,8 @@ class FCOSHead(nn.Module):
                 The tensor predicts 4-vector (dl,dt,dr,db) box
                 regression values for every shift. These values are the
                 relative offset between the shift and the ground truth box.
-            centerness (list[Tensor]): #lvl tensors, each has shape (N, 1, Hi, Wi).
-                The tensor predicts the centerness at each spatial position.
+            ious_pred (list[Tensor]): #lvl tensors, each has shape (N, 1, Hi, Wi).
+                The tensor predicts the iou at each spatial position.
         """
         logits = []
         bbox_reg = []
