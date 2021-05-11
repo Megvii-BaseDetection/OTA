@@ -61,7 +61,7 @@ pods_train --num-gpus 8 --num-machines N --machine-rank 0/1/.../N-1 --dist-url "
 |  [FreeAnchor](https://github.com/Megvii-BaseDetection/cvpods/tree/master/playground/detection/coco/free_anchor/free_anchor.res50.fpn.coco.800size.1x) | R50   | 1x | 38.4 | 55.4  | 57.0/41.1/21.9/41.7/51.8      | - |
 |  [ATSS](https://github.com/Megvii-BaseDetection/cvpods/tree/master/playground/detection/coco/atss/atss.res50.fpn.coco.800size.1x) | R50   | 1x    | 39.4 | 57.7    |  57.5/42.7/22.9/42.9/51.2   | - |
 |  [PAA\(w/. Voting\)](https://github.com/kkhoot/PAA) | R50   | 1x  | 40.4 |   -  |  -   | - |
-|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.res50.fpn.coco.800size.1x) | R50   | 1x       | **40.7**  |  **59.0** |  **58.4**/**44.3**/**23.2**/**45.0**/**53.6**    | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/ETpQpDF_5E5JlmNfK1h4zLABNH1St_BXLnkvbpKjAEB5Tg) |
+|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.res50.fpn.coco.800size.1x) | R50   | 1x       | **40.7**  |  **59.0** |  **58.4**/**44.3**/**23.2**/**45.0**/**53.6**    | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/EVo55E_uiHJNvtOCoMPmh5wBR0yxZs1ycIugIWTVyLIgvg?e=uIhwBs) |
 
 ### Results on COCO test-dev
 | Model | Backbone | LR Sched. | Training Scale (ShortSide) |mAP | AP50/AP75/APs/APm/APl | Download |
