@@ -66,10 +66,10 @@ pods_train --num-gpus 8 --num-machines N --machine-rank 0/1/.../N-1 --dist-url "
 ### Results on COCO test-dev
 | Model | Backbone | LR Sched. | Training Scale (ShortSide) |mAP | AP50/AP75/APs/APm/APl | Download |
 |:------| :----:   | :----: |:---:| :---:| :---:| :---:|
-|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.res101.fpn.coco.800size.1x) | R101   | 2x | 640~800 | 45.3 | 63.5/49.3/26.9/48.8/56.1   | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/EXRgFRfL2ZZHiuKEK2bNn5oBjKIlQwaeX0zH02wWomGLYQ?e=6Ctp5E) |
-|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.fpn.coco.800size.1x) | X101     | 2x | 640~800 | 47.0 | 65.8/51.1/29.2/50.4/57.9 | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/Ec2yTrxYDZFAgqWGEnNT6pwB870Frg641WRy7zctHyRzPw?e=YS1RC2) |
-|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.dcnv2.fpn.coco.800size.1x) | X101-DCN | 2x | 640~800 | 49.2 |   67.6/53.5/30.0/52.5/62.3 | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/EYy9odfpIEhIszqrI_vbuzIBlPcW7YRZYmXaT9ws7FkRRg?e=ZYo8SO) |
-|  [OTA*](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.dcnv2.fpn.coco.800size.1x) | X101-DCN | 2x | 640~800 | 51.5 |   68.6/57.1/34.1/53.7/64.1 | [weights](https://megvii-my.sharepoint.cn/:u:/g/personal/gezheng_megvii_com/EYy9odfpIEhIszqrI_vbuzIBlPcW7YRZYmXaT9ws7FkRRg?e=ZYo8SO) |
+|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.res101.fpn.coco.800size.1x) | R101   | 2x | 640~800 | 45.3 | 63.5/49.3/26.9/48.8/56.1   | weights |
+|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.fpn.coco.800size.1x) | X101     | 2x | 640~800 | 47.0 | 65.8/51.1/29.2/50.4/57.9 | weights |
+|  [OTA](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.dcnv2.fpn.coco.800size.1x) | X101-DCN | 2x | 640~800 | 49.2 |   67.6/53.5/30.0/52.5/62.3 | weights |
+|  [OTA*](https://github.com/Joker316701882/OTA/tree/main/playground/detection/coco/ota.x101.dcnv2.fpn.coco.800size.1x) | X101-DCN | 2x | 640~800 | 51.5 |   68.6/57.1/34.1/53.7/64.1 | weights |
 
 \* stands for ATSS-style testing time augmentation. To enable testing time augmentation, add/modify the following code frac in the corresponding config.py
 
